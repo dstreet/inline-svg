@@ -107,7 +107,7 @@
 			replacement.style.height = viewBox.height + 'px';
 			replacement.style.background = 'transparent url(' + fallback + ') no-repeat -' + viewBox.x + 'px -' + viewBox.y + 'px';
 
-			return replacement
+			return replacement;
 		}
 
 		/**
@@ -127,7 +127,7 @@
 		 * @return Boolean
 		 */
 		function _checkSupport() {
-			var div = createElement('div');
+			var div = document.createElement('div');
 			div.innerHTML = '<svg/>';
 			return (div.firstChild && div.firstChild.namespaceURI) == 'http://www.w3.org/2000/svg';
 		}
@@ -136,12 +136,12 @@
 			init: function() {
 				// Exit if inline svg is supported by the browser
 				if (_checkSupport()) {
-					return false
+					return false;
 				} else {
 					_replaceSVG();
 				}
 			}
-		}
+		};
 	};
 
 
