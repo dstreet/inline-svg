@@ -10,18 +10,18 @@
 
 
 (function (root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['exports'], factory);
-    } else if (typeof exports === 'object') {
-        // CommonJS
-        factory(exports);
-    } else {
-        // Browser globals
-        var exports = {};
+	if (typeof define === 'function' && define.amd) {
+		// AMD. Register as an anonymous module.
+		define(['exports'], factory);
+	} else if (typeof exports === 'object') {
+		// CommonJS
+		factory(exports);
+	} else {
+		// Browser globals
+		var exports = {};
 		factory(exports);
 		root.InlineSVG = exports.InlineSVG;
-    }
+	}
 }(this, function (exports) {
 
 
@@ -128,8 +128,8 @@
 		 */
 		function _checkSupport() {
 			var div = createElement('div');
-	    	div.innerHTML = '<svg/>';
-	    	return (div.firstChild && div.firstChild.namespaceURI) == 'http://www.w3.org/2000/svg';
+			div.innerHTML = '<svg/>';
+			return (div.firstChild && div.firstChild.namespaceURI) == 'http://www.w3.org/2000/svg';
 		}
 
 		return {
