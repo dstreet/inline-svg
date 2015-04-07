@@ -1,5 +1,5 @@
 /*!
- * Inline SVG Polyfill v.1.0.0
+ * Inline SVG Polyfill v.1.0.1
  * ----------------------------------------------------------------------------
  * Find inline SVG elements and replace them with a fallback image set via
  * the `data-fallback` attribute.
@@ -18,7 +18,9 @@
         factory(exports);
     } else {
         // Browser globals
-        factory((root.InlineSVG = {}));
+        var exports = {};
+		factory(exports);
+		root.InlineSVG = exports.InlineSVG;
     }
 }(this, function (exports) {
 

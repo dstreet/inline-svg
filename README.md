@@ -1,4 +1,4 @@
-Inline SVG Polyfill v.1.0.0
+Inline SVG Polyfill v.1.0.1
 ---------------------------
 
 Sadly, inline SVGs aren't supported in some browsers. This polyfill will use a
