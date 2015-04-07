@@ -1,5 +1,5 @@
 /*!
- * Inline SVG Polyfill v.1.0.1
+ * Inline SVG Polyfill v.1.0.2
  * ----------------------------------------------------------------------------
  * Find inline SVG elements and replace them with a fallback image set via
  * the `data-fallback` attribute.
@@ -46,10 +46,13 @@
 				// Go to next element if no fallback was given
 				if (!fallback) continue;
 
-				useEl = svgList[i].querySelector('use');
+				useEl = svgList[i].getElementsByTagName('use');
 
 				// Go to next element if the svg does not have a `use` child
-				if (!useEl) continue;
+				if (!useEl.length) continue;
+
+				// Get the first `use` child
+				useEl = useEl[0];
 
 				ref = document.getElementById(useEl.getAttribute('xlink:href').replace('#', ''));
 
@@ -107,7 +110,7 @@
 			replacement.style.height = viewBox.height + 'px';
 			replacement.style.background = 'transparent url(' + fallback + ') no-repeat -' + viewBox.x + 'px -' + viewBox.y + 'px';
 
-			return replacement
+			return replacement;
 		}
 
 		/**
@@ -127,7 +130,7 @@
 		 * @return Boolean
 		 */
 		function _checkSupport() {
-			var div = createElement('div');
+			var div = document.createElement('div');
 			div.innerHTML = '<svg/>';
 			return (div.firstChild && div.firstChild.namespaceURI) == 'http://www.w3.org/2000/svg';
 		}
@@ -136,12 +139,12 @@
 			init: function() {
 				// Exit if inline svg is supported by the browser
 				if (_checkSupport()) {
-					return false
+					return false;
 				} else {
 					_replaceSVG();
 				}
 			}
-		}
+		};
 	};
 
 
