@@ -46,10 +46,13 @@
 				// Go to next element if no fallback was given
 				if (!fallback) continue;
 
-				useEl = svgList[i].querySelector('use');
+				useEl = svgList[i].getElementsByTagName('use');
 
 				// Go to next element if the svg does not have a `use` child
-				if (!useEl) continue;
+				if (!useEl.length) continue;
+
+				// Get the first `use` child
+				useEl = useEl[0];
 
 				ref = document.getElementById(useEl.getAttribute('xlink:href').replace('#', ''));
 
