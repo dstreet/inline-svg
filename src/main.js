@@ -1,5 +1,5 @@
 /*!
- * Inline SVG Polyfill v.1.0.1
+ * Inline SVG Polyfill v.1.0.2
  * ----------------------------------------------------------------------------
  * Find inline SVG elements and replace them with a fallback image set via
  * the `data-fallback` attribute.
