@@ -169,9 +169,9 @@
 		}
 
 		return {
-			init: function() {
+			init: function(force) {
 				// Exit if inline svg is supported by the browser
-				if (_checkSupport()) {
+				if (!force && _checkSupport()) {
 					return false;
 				} else {
 					_replaceSVG();
