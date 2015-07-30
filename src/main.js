@@ -1,5 +1,5 @@
 /*!
- * Inline SVG Polyfill v.1.0.2
+ * Inline SVG Polyfill v.1.1.0
  * ----------------------------------------------------------------------------
  * Find inline SVG elements and replace them with a fallback image set via
  * the `data-fallback` attribute.
@@ -37,6 +37,7 @@
 
 			for (var i = 0, len = svgList.length; i < len; i += 1) {
 				var fallback = svgList[i].getAttribute('data-fallback')
+                    , fallbackSize = svgList[i].getAttribute('data-fallback-size')
 					, parent = null
 					, useEl = null
 					, ref = null
@@ -54,13 +55,24 @@
 				// Get the first `use` child
 				useEl = useEl[0];
 
-				ref = document.getElementById(useEl.getAttribute('xlink:href').replace('#', ''));
+                // Get the viewBox reference element
+                // The originating SVG element takes precedence
+                if (svgList[i].getAttribute('viewBox')) {
+                    ref = svgList[i];
+                } else {
+                    ref = document.getElementById(useEl.getAttribute('xlink:href').replace('#', ''));
+                }
 
 				// Go to next element if the svg doc we are referencing doesn't exist
-				if (!ref) continue;
+				if (!ref || !ref.getAttribute('viewBox')) continue;
 
 				viewBox = _getViewBox(ref);
 				parent = svgList[i].parentElement;
+
+                if (fallbackSize) {
+                    fallbackSize = fallbackSize.split(' ');
+                    viewBox = _resizeViewBox(viewBox, parseInt(fallbackSize[0]), parseInt(fallbackSize[1]));
+                }
 
 				replacement = _createReplacement(viewBox, fallback, svgList[i]);
 
@@ -91,6 +103,27 @@
 
 			return viewBox;
 		}
+
+        /**
+         * Resize the viewbox based on new width and height
+         *
+         * @param  Object The viewbox to transform
+         * @param  Number New width
+         * @param  Number New height
+         *
+         * @return Object
+         */
+        function _resizeViewBox(viewBox, width, height) {
+            var ratioW = width / viewBox.width;
+            var ratioH = height / viewBox.height;
+
+            return {
+                x: viewBox.x * ratioW,
+                y: viewBox.y * ratioH,
+                width: width,
+                height: height
+            };
+        }
 
 		/**
 		 * Create new element with fallback background
